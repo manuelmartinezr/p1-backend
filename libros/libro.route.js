@@ -6,13 +6,18 @@ const router = express.Router();
 // endpoint functions
 async function getLibro(req, res) {
   const { id, incluir_reservados, incluir_deshabilitados, ...others } = req.query;
-  const result = id 
-  ? await readOneController(id, incluir_reservados, incluir_deshabilitados) 
-  : await readListController({
-    ...others,
-    incluir_reservados,
-    incluir_deshabilitados
-  })
+  try {
+    const result = id 
+    ? await readOneController(id, incluir_reservados, incluir_deshabilitados) 
+    : await readListController({
+      ...others,
+      incluir_reservados,
+      incluir_deshabilitados
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(401).json({error : error.message});
+  }
 }
 // endpoints
 router.get('/search', getLibro);
