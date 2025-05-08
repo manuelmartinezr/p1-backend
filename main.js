@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import express from 'express';
 import userRoutes from './usuarios/user.route.js';
+import libroRoutes from './libros/libro.route.js';
 
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use('/api/users', userRoutes);
+app.use('/api/libros', libroRoutes); // Cambia esto por el router de libros cuando esté listo
 
 async function connectDB() {
   try {

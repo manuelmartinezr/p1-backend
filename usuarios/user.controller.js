@@ -13,7 +13,7 @@ async function readController(correo, contraseña) {
     return user;
 }
 
-async function registerController(correo, contraseña, permisos) {
+async function createController(correo, contraseña, permisos) {
     const user = await createUserAction(correo, contraseña, permisos);
     if (!user) {
         throw new Error('Error al registrar el usuario');
@@ -21,4 +21,4 @@ async function registerController(correo, contraseña, permisos) {
     return user;
 }
 
-export { readController, registerController };
+export { readController, createController };
