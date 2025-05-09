@@ -32,7 +32,6 @@ async function readController(correo, contraseña) {
 
     return token;
 }
-
 async function createController(correo, contraseña, permisos) {
     const user = await createUserAction(correo, contraseña, permisos);
     if (!user) {
@@ -40,7 +39,6 @@ async function createController(correo, contraseña, permisos) {
     }
     return user;
 }
-
 async function updateController(id, updates) {
     const {inhabilitado, ...resto} = updates;
     const user = await updateUserAction(id, resto);
@@ -56,5 +54,4 @@ async function deleteController(id) {
     }
     return user;
 }
-
 export { readController, createController, updateController, deleteController};

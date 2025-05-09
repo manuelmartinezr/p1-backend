@@ -36,7 +36,4 @@ function authorizeSelfOr(permission) {
       return res.status(403).json({ message: 'Forbidden' });
     };
   }
-  
- 
-  
 export { authenticateJWT, authorize, authorizeSelfOr };

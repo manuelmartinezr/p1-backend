@@ -1,6 +1,6 @@
 import express from 'express';
 import { readController, createController, updateController, deleteController} from './user.controller.js'; // se importa la función del controller
-import { authenticateJWT, authorize, authorizeSelfOr } from '../middleware/auth.js';
+import { authenticateJWT, authorizeSelfOr } from '../middleware/auth.js';
 const router = express.Router();
 
 // endpoint functions
