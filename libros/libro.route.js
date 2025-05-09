@@ -1,5 +1,5 @@
 import express from 'express';
-import { readOneController, readListController, createController, updateController} from './libro.controller.js'; // se importa la función del controller
+import { readOneController, readListController, createController, updateController, deleteController} from './libro.controller.js'; // se importa la función del controller
 import { authenticateJWT, authorize } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -38,6 +38,16 @@ async function updateLibro(req, res) {
     res.status(401).json({error : error.message});
   }
 }
+async function deleteLibro(req, res) {
+  const id = req.params.id;
+  try {
+    const libro = await deleteController(id);
+    res.status(200).json(libro);
+  } catch (error) {
+    res.status(401).json({error : error.message});
+  }
+}
+
 // endpoints
 router.get('/search', getLibro);
 router.post('/add',
@@ -48,5 +58,8 @@ router.put('/update/:id',
   authenticateJWT,
   authorize('editar_libros'),
   updateLibro);
-
+router.patch('/delete/:id',
+  authenticateJWT,
+  authorize('inhabilitar_libros'),
+  deleteLibro);
 export default router;

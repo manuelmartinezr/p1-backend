@@ -1,5 +1,5 @@
 import express from 'express';
-import { readController, createController, updateController} from './user.controller.js'; // se importa la función del controller
+import { readController, createController, updateController, deleteController} from './user.controller.js'; // se importa la función del controller
 import { authenticateJWT, authorize, authorizeSelfOr } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -33,6 +33,15 @@ async function updateUser(req, res) {
     res.status(401).json({error : error.message});
   }
 }
+async function deleteUser(req, res) {
+  const id = req.params.id;
+  try {
+    const user = await deleteController(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json({error : error.message});
+  }
+}
 // endpoints
 router.post('/login', getUser);
 router.post('/register', registerUser); 
@@ -40,4 +49,8 @@ router.put('/update/:id',
   authenticateJWT,
   authorizeSelfOr('editar_usuarios'),
   updateUser);
+router.patch('/delete/:id',
+  authenticateJWT,
+  authorizeSelfOr('inhabilitar_usuarios'),
+  deleteUser);
 export default router;

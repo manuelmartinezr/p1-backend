@@ -2,6 +2,7 @@
 import { readUserAction} from './read.user.action.js';
 import { createUserAction } from './create.user.action.js';
 import { updateUserAction } from './update.user.action.js';
+import { deleteUserAction } from './delete.user.action.js';
 import jwt from 'jsonwebtoken';
 
 async function readController(correo, contraseña) {
@@ -41,11 +42,19 @@ async function createController(correo, contraseña, permisos) {
 }
 
 async function updateController(id, updates) {
-    const user = await updateUserAction(id, updates);
+    const {inhabilitado, ...resto} = updates;
+    const user = await updateUserAction(id, resto);
     if (!user) {
         throw new Error('Error al actualizar el usuario');
     }
     return user;
 }
+async function deleteController(id) {
+    const user = await deleteUserAction(id);
+    if (!user) {
+        throw new Error('Error al eliminar el usuario');
+    }
+    return user;
+}
 
-export { readController, createController, updateController};
+export { readController, createController, updateController, deleteController};
