@@ -1,5 +1,6 @@
 import { readLibroAction } from './read.libro.action.js';
 import { createLibroAction } from './create.libro.action.js';
+import { updateLibroAction } from './update.libro.action.js';
 import { LibroModel } from './libro.model.js';
 
 // lógica
@@ -39,5 +40,10 @@ async function createController(titulo, autor, editorial, fecha_pub, genero) {
     if (!libro) throw new Error('Error al crear el libro');
     return libro;
 }
+async function updateController(id, updates) {
+    const libro = await updateLibroAction(id, updates);
+    if (!libro) throw new Error('Error al actualizar el libro');
+    return libro;
+}
 
-export { readOneController, readListController, createController };
+export { readOneController, readListController, createController, updateController };
