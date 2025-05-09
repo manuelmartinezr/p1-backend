@@ -20,4 +20,23 @@ function authorize(permission) {
         res.status(403).json({ message: 'Forbidden' });
     };
 }
-export { authenticateJWT, authorize };
+function authorizeSelfOr(permission) {
+    return (req, res, next) => {
+      const targetId = req.params.id;   
+      const me = req.user.id;     
+
+      if (me === targetId) {
+        return next();
+      }
+  
+      if (req.user?.permisos?.[permission]) {
+        return next();
+      }
+  
+      return res.status(403).json({ message: 'Forbidden' });
+    };
+  }
+  
+ 
+  
+export { authenticateJWT, authorize, authorizeSelfOr };

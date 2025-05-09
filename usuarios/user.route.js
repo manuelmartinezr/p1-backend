@@ -1,6 +1,6 @@
 import express from 'express';
 import { readController, createController, updateController} from './user.controller.js'; // se importa la función del controller
-import { authenticateJWT, authorize } from '../middleware/auth.js';
+import { authenticateJWT, authorize, authorizeSelfOr } from '../middleware/auth.js';
 const router = express.Router();
 
 // endpoint functions
@@ -38,6 +38,6 @@ router.post('/login', getUser);
 router.post('/register', registerUser); 
 router.put('/update/:id',
   authenticateJWT,
-  authorize('editar_usuarios'),
+  authorizeSelfOr('editar_usuarios'),
   updateUser);
 export default router;
