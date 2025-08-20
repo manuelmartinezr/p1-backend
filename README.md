@@ -1,2 +1,2 @@
 ## Documentation
-You can find the detailed instructions in the [Project Guide (PDF)](docs/proyecto01.pdf).
+You can find the detailed instructions in the [Project Guide (PDF)](docs/proyecto-01.pdf).
