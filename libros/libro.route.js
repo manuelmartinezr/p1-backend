@@ -1,5 +1,5 @@
 import express from 'express';
-import { readOneController, readListController, createController, updateController, deleteController} from './libro.controller.js'; // se importa la función del controller
+import { readController, createController, updateController, deleteController} from './libro.controller.js'; // se importa la función del controller
 import { authenticateJWT, authorize } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -7,16 +7,14 @@ const router = express.Router();
 async function getLibro(req, res) {
   const { id, incluir_reservados, incluir_deshabilitados, ...others } = req.query;
   try {
-    const result = id 
-    ? await readOneController(id, incluir_reservados, incluir_deshabilitados) 
-    : await readListController({
-      ...others,
+    const result = await readController(
+      id || others,
       incluir_reservados,
       incluir_deshabilitados
-    });
+    );
     res.status(200).json(result);
   } catch (error) {
-    res.status(401).json({error : error.message});
+    res.status(401).json({ error: error.message });
   }
 }
 async function addLibro(req, res) {
